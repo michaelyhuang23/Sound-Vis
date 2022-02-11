@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<title>Spectrogram</title>
+<style>
+	* {
+    margin: 0;
+    padding: 0;
+} 
+</style>
+</head>
+<body>
+<main>
+  	<div id ="Spectrogram"></div>
+</main>
+</body>
+<script src="three.js"></script>
+// <- Shaders go here.
+
+<script type="x-shader/x-vertex" id="vertexshader">
+	void main(){
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+	}
+</script>
+
+<script src="setup.js"></script>
+      
+<script>
+"use strict";
+  // <- Future code goes here
+  
+</script>
+</html>
