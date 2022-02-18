@@ -1,13 +1,14 @@
 "use strict";
 // Initialize Scene parameters
-let first_click = true;
-document.addEventListener("click", function(){
-	if (first_click) {
-		first_click  = false;
-    }else{
-    	run();
-    }
-});
+// let first_click = true;
+// document.addEventListener("click", function(){
+// 	if (first_click) {
+// 		first_click  = false;
+//     }else{
+//     	run();
+//     }
+// });
+run();
 
 function run(){
 	let frequency_samples = 256; // Y resolution
