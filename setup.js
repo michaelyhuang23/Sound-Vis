@@ -35,6 +35,7 @@ function run(){
 	navigator.mediaDevices.getUserMedia({ audio: {echoCancellation:false} }).then(process_audio);
 
 	function process_audio (stream) {
+		console.log(stream);
 		SOURCE = ACTX.createMediaStreamSource(stream);
 		SOURCE.connect(ANALYSER);
 	}
@@ -152,9 +153,28 @@ function run(){
 		update_geometry(); 
 		renderer.render( scene, camera );				
 	}
+
+
+	function componentToHex(c) {
+	  var hex = c.toString(16);
+	  return hex.length == 1 ? "0" + hex : hex;
+	}
+
+	function rgbToHex(r, g, b) {
+	  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	}
 				
 	function update_geometry() {
 		ANALYSER.getByteFrequencyData(DATA);
+		let meanMag = 0.0;
+		for(let i=0; i<frequency_samples; i++){
+			meanMag += DATA[i];
+		}
+		meanMag = parseInt(meanMag / frequency_samples);
+		let container = document.getElementById( 'Speech' );
+		console.log(meanMag);
+		const clamp = (num, max, range) => Math.min(Math.max(num+max-range, 0), max);
+		container.style.color = rgbToHex(clamp(meanMag, 224, 20), clamp(meanMag, 255, 100), clamp(meanMag, 255, 20)); 
 		let start_val = frequency_samples+1;
 		let end_val = n_vertices -start_val;
 		heights.copyWithin(0, start_val, n_vertices+1);
