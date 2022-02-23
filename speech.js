@@ -19,8 +19,18 @@ function start(){
                 transcript.replace("\n", "<br>");
                 if(event.results[i].isFinal){
                     finalTranscripts += transcript;
+                    const t_words = transcript.split(' ');
+                    for(let j=0;j<t_words.length;j++){
+                        if(t_words[j].match(/^[A-Za-z0-9]+\**$/)){
+                            if(t_words[j] in wordCount){
+                                wordCount[t_words[j]]++;
+                            }else{
+                                wordCount[t_words[j]]=1;
+                            }
+                        }
+                    }
                     const words = finalTranscripts.split(' ');
-                    finalTranscripts = words.slice(-limit).join(' ');
+                    finalTranscripts = words.slice(-limit).join(' ')+" ";
                 }else{
                     interTranscripts += transcript;
                 }
@@ -29,6 +39,7 @@ function start(){
         };
         speechRecognizer.onerror = function(event){
         };
+        speechRecognizer.addEventListener('end', () => speechRecognizer.start());
     }
     else{
         r.innerHTML = "Your browser does not support speech recognition. Use Google Chrome.";

@@ -3,6 +3,7 @@
 let first_click = true;
 document.addEventListener("click", function(){
 	if (first_click) {
+		draw("#008b8b");
 		run();
 		start();
 		first_click  = false;
@@ -15,7 +16,7 @@ function run(){
 	let DATA = new Uint8Array(frequency_samples); // for later
 	let camera, scene, renderer;
 	let heights, mesh;
-	let time_samples = 1200; // X resolution
+	let time_samples = 250; // X resolution
 	let n_vertices = (frequency_samples+1) * (time_samples+1);
 	let xsegments = time_samples;
 	let ysegments = frequency_samples;
@@ -172,9 +173,9 @@ function run(){
 		}
 		meanMag = parseInt(meanMag / frequency_samples);
 		let container = document.getElementById( 'Speech' );
-		console.log(meanMag);
 		const clamp = (num, max, range) => Math.min(Math.max(num+max-range, 0), max);
-		container.style.color = rgbToHex(clamp(meanMag, 224, 20), clamp(meanMag, 255, 100), clamp(meanMag, 255, 20)); 
+		let color = rgbToHex(clamp(meanMag, 224, 20), clamp(meanMag, 255, 100), clamp(meanMag, 255, 20)); 
+		container.style.color = color;
 		let start_val = frequency_samples+1;
 		let end_val = n_vertices -start_val;
 		heights.copyWithin(0, start_val, n_vertices+1);
